@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NC FIGHT</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet"> <!-- Link para a fonte Nunito Sans -->
+        <!--<script src="https://cdn.tailwindcss.com"></script>-->
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+    </head>
+    
+    <body>
+        {% block 'body' %} {% endblock %} 
+    </body>
+    <style>
+        /* Estilos Globais */
+body {
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Cabeçalho */
+.header {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+}
+
+/* Seção de Herói */
+.hero {
+    background: url('hero-image.jpg') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Seção de Recursos */
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px 20px;
+    background-color: #f8f9fa;
+}
+
+.feature {
+    max-width: 300px;
+    text-align: center;
+}
+
+.feature h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 16px;
+}
+
+/* Seção de Preços */
+.card {
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-text {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.list-unstyled {
+    padding: 0;
+    list-style: none;
+}
+
+.list-unstyled li {
+    margin-bottom: 10px;
+}
+
+/* Estilo do Carrossel */
+.carousel-inner {
+    height: 400px;
+    opacity: 0.8;
+}
+
+.carousel-item img {
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Estilos para dispositivos móveis */
+@media (max-width: 768px) {
+    .carousel-inner {
+        height: 200px; /* Altura menor para dispositivos móveis */
+    }
+
+    .carousel-item img {
+        height: 200px; /* Altura menor para as imagens no carrossel */
+    }
+}
+
+/* Estilos para a landing page */
+.landing-page-sections {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f5f5f5;
+}
+
+.section {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.section h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.section p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Estilos para a faixa de patrocinadores */
+.sponsor-strip {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.sponsor-strip-content {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: scroll 20s linear infinite;
+}
+
+.sponsor-logo {
+    height: 200px;
+    margin: 0 20px;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Classe para subtítulos */
+.subtitle {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Classe para o corpo do regulamento */
+.regulation-body {
+    text-align: justify;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Estilos para o formulário de cadastro */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-check {
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+/* Estilos para o modal */
+.modal-body {
+    text-align: justify;
+}
+
+.subtitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.regulation-body p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+    </style>
+</html>

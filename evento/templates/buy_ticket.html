@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+{% if messages %}
+    {% for i in messages %}   
+        <div class="alert {{i.tags}}" role="alert">
+            {{i}} 
+        </div>
+
+    {% endfor %}
+{% endif %}
+
+    <div class="container mt-5">
+        <!-- Conteúdo específico da página -->
+        <h1>Comprar Ingressos</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h2>Ingresso Dia 1 - Padrão</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Valor de R$35,00</p>
+                        <button class="btn btn-primary" onclick="openModal(35, 'Dia 1')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h2>Ingresso Dia 1 - VIP</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Valor de R$100,00</p>
+                        <button class="btn btn-primary" onclick="openModal(100, 'Dia 1 VIP')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h2>Ingresso Dia 2 - Padrão</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Valor de R$35,00</p>
+                        <button class="btn btn-primary" onclick="openModal(35, 'Dia 2')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h2>Ingresso Dia 2 - VIP</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Valor de R$100,00</p>
+                        <button class="btn btn-primary" onclick="openModal(100, 'Dia 2 VIP')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="buyTicketModal" tabindex="-1" role="dialog" aria-labelledby="buyTicketModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="buyTicketModalLabel">Comprar Ingresso</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="buyTicketForm" method="POST" action="{% url 'buy_ticket' %}">{% csrf_token %}
+                        <input type="hidden" name="tipo_ingresso" id="tipo_ingresso">
+                        <div class="form-group">
+                            <label for="quantity">Quantidade</label>
+                            <input type="number" class="form-control" id="quantity" name="quantidade" min="1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="totalPrice">Valor Final</label>
+                            <input type="text" class="form-control" id="totalPrice" name="valor_final" readonly>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ir para o Pagamento</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal QR Code -->
+    <div class="modal fade" id="qrCodeModal" tabindex="-1" role="dialog" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrCodeModalLabel">Pagamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg/280px-Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg.png" alt="QR Code">
+                    <p>Realize o PIX para o QR Code acima e confirme o pagamento.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ticketPrice = 0;
+        let ticketType = '';
+
+        function openModal(price, type) {
+            ticketPrice = price;
+            ticketType = type;
+            document.getElementById('tipo_ingresso').value = type;
+            document.getElementById('totalPrice').value = `R$ ${ticketPrice}`;
+            $('#buyTicketModal').modal('show');
+        }
+
+        document.getElementById('quantity').addEventListener('input', function() {
+            const quantity = this.value;
+            const totalPrice = ticketPrice * quantity;
+            document.getElementById('totalPrice').value = `R$ ${totalPrice}`;
+        });
+
+        document.getElementById('buyTicketForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Verifique se o usuário está logado
+            const isAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
+            if (!isAuthenticated) {
+                window.location.href = "{% url 'login' %}";
+            } else {
+                // Lógica para processar a compra
+                this.submit();
+                $('#buyTicketModal').modal('hide');
+                $('#qrCodeModal').modal('show');
+            }
+        });
+    </script>
+{% include "partials/footer.html" %}
+{% endblock %}

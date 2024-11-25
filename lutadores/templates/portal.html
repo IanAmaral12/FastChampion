@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+{% if messages %}
+    {% for i in messages %}   
+        <div class="alert {{i.tags}}" role="alert">
+            {{i}} 
+        </div>
+
+    {% endfor %}
+{% endif %}
+
+<br>
+<div class="container">
+    <h1>Você está no sistema</h1>
+</div>
+
+{% endblock %}

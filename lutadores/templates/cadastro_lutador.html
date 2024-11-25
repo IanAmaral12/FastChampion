@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+{% if messages %}
+    {% for i in messages %}   
+        <div class="alert {{i.tags}}" role="alert">
+            {{i}} 
+        </div>
+
+    {% endfor %}
+{% endif %}
+
+<form action="{% url 'cadastro_lutador' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+    <div class="container mt-5">
+        <h1>Cadastro de Lutadores</h1>
+            <div class="form-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="data_nascimento">Data de Nascimento</label>
+                <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+            </div>
+            <div class="form-group">
+                <label for="peso">Peso (Consulte as Categorias no Regulamento)</label>
+                <input type="number" class="form-control" id="peso" name="peso" required>
+            </div>
+            <div class="form-group">
+                <label for="nivel">Nível de Experiência (Consulte os Níveis de Experiência no Regulamento)</label>
+                <input type="text" class="form-control" id="nivel" name="nivel" required>
+            </div>
+            <div class="form-group">
+                <label for="equipe">Equipe</label>
+                <input type="text" class="form-control" id="equipe" name="equipe" required>
+            </div>
+            <div class="form-group">
+                <label for="coach">Nome do Técnico</label>
+                <input type="text" class="form-control" id="coach" name="coach" required>
+            </div>
+            <div class="form-group">
+                <label for="contato">Contato</label>
+                <input type="text" class="form-control" id="contato"  name="contato" required>
+            </div>
+            
+            <div class="flex space-x-4">
+                <div class="w-full">
+                    <input type="submit" class="rounded-md w-full mt-4 bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400" value="Aceitar termos e Cadastrar">
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#regulationModal">Visualizar Termos</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="regulationModal" tabindex="-1" role="dialog" aria-labelledby="regulationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="regulationModalLabel">Regulamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body regulation-body">
+                    <h2 class="subtitle">I - OBJETIVO:</h2>
+                    <div class="regulation-body">
+                        O Campeonato de Boxe para Alunos visa incentivar a prática do boxe, promovendo a integração entre alunos estreantes, com lutas e campeões, tanto no gênero masculino quanto no feminino. O Campeonato de Boxe para Alunos visa incentivar a prática do boxe, promovendo a integração entre alunos estreantes, com lutas e campeões, tanto no gênero masculino quanto no feminino.
+                    </div>
+                    <h2 class="subtitle">II - INSCRIÇÕES:</h2>
+                    <div class="regulation-body">
+                    1. Período de inscrições: dd/mm/yyyy a dd/mm/yyyy.<br>
+                    2. Dados necessários para inscrição:<br>
+                    ● Nome Completo<br>
+                    ● Comprovante de pagamento da inscrição<br>
+                    ● INFORMAR:1-Estreante( )? 2-com lutas( )? 3-campeão( )?<br>
+                    ● Telefone<br>
+                    ● Ano de Nascimento<br>
+                    ● Peso (OBS > tabela de peso logo abaixo ( ))<br>
+                    ● Nome da Equipe<br>
+                    </div>
+                    <h2 class="subtitle">III - CATEGORIAS E INSCRIÇÕES:</h2>
+                    <div class="regulation-body">
+                    1. Os participantes devem indicar corretamente sua condição no momento
+                    da inscrição se é ALUNO:1-ESTREANTE( ) 2-ALUNO COM LUTA( ) 3-ALUNO
+                    CAMPEÃO( )<br>
+                    ● Alunos Campeões:que já foram campeões em alguma edição do
+                    campeonato de alunos.<br>
+                    ● Alunos Estreantes: que nunca lutaram em nenhum tipo de evento de
+                    lutas.<br>
+                    ● Alunos com Lutas: que já participaram de lutas de alunos e nunca foram
+                    campeões.<br>
+                    2. As inscrições serão consideradas completas somente se todos os dados
+                    forem fornecidos e o pagamento confirmado pela instituição financeira.<br>
+                    3. Cada equipe (academia, clube, agremiação) poderá inscrever quantos
+                    alunos desejar por categoria.<br>
+                    </div>
+
+                    <h2 class="subtitle">IV - DEFINIÇÃO ALUNOS É:</h2>
+                    <div class="regulation-body">
+                        1.Estreante: Aluno que nunca participou de competições de boxe ou qualquer
+                        esporte de combate. <br>
+                        2.Alunos com lutas: Nunca participaram de eventos com atletas, luvas menores
+                        que 18 oz, sem capacete e camiseta, e sem regulamentação de federações para
+                        atletas do alto redemento.<br>
+                        3.Alunos campeões: Venceram na final do campeonato em sua categoria ou em
+                        lutas casadas ou em qualquer evento de entretenimento de alunos.<br>
+                    </div>
+
+                    <h2 class="subtitle">V - DOCUMENTAÇÃO OBRIGATÓRIA:</h2>
+                    <div class="regulation-body">
+                        1. É OBRIGATORIO: Todos os alunos apresentar na pesagem do primeiro dia de
+                        luta: <br>
+                            ● Autorização para Veiculação de Imagens e Som de Voz Próprio Punho <br>
+                            ● Atestado Médico apto para atividade física do aluno participante <br>
+                            ● Autorização dos pais para menores de até 17 anos <br>
+                            ● documento oficial com foto: RG, CNH, ou Registro Profissional como: CREA,
+                            CREF, OAB, etc... <br>
+                    </div>
+
+                    <h2 class="subtitle">VI - DIVISÃO DE IDADES E PESO:</h2>
+                    <div class="regulation-body">
+                        1. Idades (no ano): <br>
+                        ● 11,12,13,14 (Infantil)<br>
+                        ● 15,16,17,18 (Cadete/Juvenil)<br>
+                        ● 19 a 40 (Adulto 1)<br>
+                        ● 41 a 50 (Adulto 2)<br>
+                        ● 51 a 55 (Adulto 3)<br>
+                        ● Acima de 56 anos (A combinar)<br>
+                        2. Categorias de Peso: <br>
+                        ● Até 52 kg ● Até 57 kg ● Até 62 kg ● Até 67 kg ● Até 72 kg ● Até 77 kg ● Até
+                        82 kg ● Até 87 kg ● Até 95 kg ● Até 100 kg ● Acima de 100 kg
+                    </div>
+
+                    <h2 class="subtitle">VII - RODADAS E LOCAL:</h2>
+                    <div class="regulation-body">
+                        locais e rodadas
+                    </div>
+
+                    <h2 class="subtitle">VIII - PESAGEM E EXAME MÉDICO:</h2>
+                    <div class="regulation-body">
+                        1. Pesagem e exame médico: Das 11:00 às 12:00 horas, no local dos combates. <br>
+                        2. Todos os alunos devem apresentar documento oficial de identificação. <br>
+                    </div>
+
+                    <h2 class="subtitle">IX - ABERTURA E VALOR DAS INSCRIÇÕES:</h2>
+                    <div class="regulation-body">
+                        1. Período: dd/mm/yyyy a dd/mm/yyyy. <br>
+                        2. Valor da Inscrição: R$xx,00(duzentos reais) por aluno <br>
+                        3. PIX PARA O PAGAMENTO DA INSCRIÇÃO E-MAIL (  ) <br>
+                        4. O valor será devolvido se não houver adversário na mesma idade, peso ou 
+                        classe.<br>
+                    </div>
+
+                    <h2 class="subtitle">X - TEMPO DE LUTAS:</h2>
+                    <div class="regulation-body">
+                        1. Infantis: 3 rounds de 1 minuto e 30 segundos, com 1 minuto de descanso. <br>
+                        2. Adultos cadetes e Juvenis: 3 rounds de 2 minutos, com 1 minuto de descanso. <br>
+                    </div>
+
+                    <h2 class="subtitle">XI - EQUIPAMENTOS OBRIGATÓRIOS:</h2>
+                    <div class="regulation-body">
+                        1. Coquilha <br>
+                        2. Protetor Bucal<br>
+                        3. Bandagem para as mãos
+                        4. OBRIGATORIO: Shorts e camiseta conforme cores dos corners (vermelho e
+                        azul)<br>
+                        5. Luvas 18 oz da MKS (fornecidas pelo evento)<br>
+                        6. Protetores de cabeça, capacete (fornecidos pelo evento)<br>
+                    </div>
+
+                    <h2 class="subtitle">XII - PARTICIPAÇÃO E LOCAL DAS RODADAS:</h2>
+                    <div class="regulation-body">
+                        1. Informações: Contato via WhatsApp - Nierry: +55 14 99705-1758, Vânia:
+                    </div>
+
+                    <h2 class="subtitle">XIII - CLASSIFICAÇÃO E PREMIAÇÃO:</h2>
+                    <div class="regulation-body">
+                        1. Classificação por equipe: Pontuação por vitória nas rodadas preliminares (1
+                        ponto). semifinais(2 pontos). e finais (3 pontos). <br>
+                        2. Premiação para o aluno: Cinturão de ouro para o 1º lugar, medalha de prata
+                        para o 2º lugar. <br>
+                        3. Premiação por equipe: Troféus para o 1º, 2º e 3º lugares. <br>
+                    </div>
+
+                    <h2 class="subtitle">XIV - INFORMAÇÕES ADICIONAIS:</h2>
+                    <div class="regulation-body">
+                        1- Valor para assistir ao evento: R$50,00 por pessoa. <br>
+                        2- Não haverá tolerância na balança. O aluno deve bater o peso até o final da
+                        pesagem.<br>
+                        3- Caso a organização seja informada de qualquer fraude, o aluno será
+                        desclassificado sem reembolso da inscrição.<br>
+                        4- Ao aceitar os termos, o participante tem ciência de que informações
+                        inválidas cancelam a inscrição e não há reembolso.<br>
+                        5- A equipe tem direito só a dois 2 técnicos sem pagar entrada.<br>
+                        6- Todos os alunos inscritos para lutar o campeonato não paga entrada.
+                        Sem mais.<br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

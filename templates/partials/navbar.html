@@ -1,0 +1,99 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static "evento/img/logo-evento.png" %}" alt="Logo" style="height: 40px;">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-home" href="{% url 'home' %}">Página Inicial</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-buy-ticket" href="{% url 'buy_ticket' %}">Comprar Ingresso</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-terms" href="{% url 'termos' %}">Termos e Regras do Evento</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <div class="nav-link">
+                        <a class="portal-lutador" id="nav-portal" href="{% url 'portal' %}">Acessar como Lutador</a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'sair' %}" class="nav-link">Sair</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <div class="nav-link">
+                        <a class="portal-lutador" id="nav-portal" href="{% url 'login' %}">Fazer Login</a>
+                    </div>
+                </li>
+                {% endif %}
+
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<style>
+    .navbar {
+        background-color: #ffffff;
+    }
+    
+    .navbar-nav {
+        list-style: none;
+        display: flex;
+        gap: 10px; /* Aumente o espaçamento entre os itens de navegação */
+    }
+    
+    .nav-item {
+        margin: 0;
+    }
+    
+    .nav-link {
+        text-decoration: none;
+        color: #696969;
+        font-size: 14px;
+    }
+    
+    .nav-link:hover, .nav-link.active {
+        color: #505050;
+    }
+    
+    .user-picture {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+    
+    .portal-lutador {
+        background-color: #F6514B;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    
+    .portal-lutador:hover {
+        background-color: #d9443e;
+    }
+</style>
