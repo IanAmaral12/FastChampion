@@ -3,11 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from .models import Pagamento
+from lutadores.models import Lutas
 import time
 
+
 def home(request):
-    if request.method == "GET":
-        return render(request, 'home.html')
+    lutas_dia1 = Lutas.objects.filter(dia_luta='Dia 1')
+    lutas_dia2 = Lutas.objects.filter(dia_luta='Dia 2')
+    return render(request, 'home.html', {'lutas_dia1': lutas_dia1, 'lutas_dia2': lutas_dia2})
 
 def buy_ticket(request):
     if request.method == "GET":
