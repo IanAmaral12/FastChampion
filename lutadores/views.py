@@ -5,51 +5,48 @@ from django.contrib import messages
 from evento.models import Pagamento
 from django.utils import timezone
 
-@login_required(login_url = '/auth/login')
+@login_required(login_url='/auth/login')
 def portal(request):
     if request.method == "GET":
-        if request.user.lutador:
-            # Lógica para lutadores
-            return render(request, 'portal.html')
+        print(f"Usuário autenticado: {request.user.is_authenticated}")
+        if hasattr(request.user, 'lutador_profile'):
+            lutador = request.user.lutador_profile
+            messages.add_message(request, messages.SUCCESS, f'Lutador Encontrado! {lutador.nome}')
+            return render(request, 'portal.html', {'lutador': lutador}, )
         else:
-            # Lógica para não lutadores
-            return render(request, 'cadastro_lutador.html')    
-        """lutadores = Lutadores.objects.all()
-        return render(request, 'portal.html', {'lutadores': lutadores})"""
+            messages.add_message(request, messages.WARNING, 'Você ainda não é um lutador. Cadastre-se!')
+            return render(request, 'cadastro_lutador.html')
     
 def cadastro_lutador(request):
     if request.method == "GET":
         return render(request, 'cadastro_lutador.html')
     elif request.method == "POST":
         nome = request.POST.get('nome')
-        data_nascimento = request.FILES.get('data_nascimento')
+        data_nascimento = request.POST.get('data_nascimento')
         peso = request.POST.get('peso')
         nivel = request.POST.get('nivel')
         equipe = request.POST.get('equipe')
         coach = request.POST.get('coach')
         contato = request.POST.get('contato')
 
-        lutadores = Lutadores(
-            nome = nome,
-            data_nascimento = data_nascimento,
-            peso = peso,
-            nivel = nivel,
-            equipe = equipe,
-            coach = coach,
-            contato = contato,
+        lutador = Lutadores(
+            user=request.user,
+            nome=nome,
+            data_nascimento=data_nascimento,
+            peso=peso,
+            nivel=nivel,
+            equipe=equipe,
+            coach=coach,
+            contato=contato,
         )
-        lutadores.save()
-
-        user = request.user
-        user.lutador = True
-        user.save()
-
+        lutador.save()
+        request.user.lutador = True
+        request.user.save()
         messages.add_message(request, messages.SUCCESS, 'Lutador cadastrado com sucesso!')
-
+        
         tipo_ingresso = 'Lutador'
         valor_final = 180.00
         quantidade = 1
-
         pagamento = Pagamento.objects.create(
             usuario=request.user,
             data_pagamento=timezone.now().date(),

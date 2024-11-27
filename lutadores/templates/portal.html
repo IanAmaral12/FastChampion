@@ -3,17 +3,47 @@
 {% block 'body' %}
 {% include "partials/navbar.html" %}
 {% if messages %}
-    {% for i in messages %}   
+    {% for i in messages %}
         <div class="alert {{i.tags}}" role="alert">
-            {{i}} 
+            {{i}}
         </div>
-
     {% endfor %}
 {% endif %}
 
 <br>
 <div class="container">
-    <h1>Você está no sistema</h1>
+    <h1>Perfil do Lutador</h1>
+    <form>
+        <div class="form-group">
+            <label for="nome">Nome Completo</label>
+            <input type="text" class="form-control" id="nome" name="nome" value="{{ lutador.nome }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="data_nascimento">Data de Nascimento</label>
+            <input type="text" class="form-control" id="data_nascimento" name="data_nascimento" value="{{ lutador.data_nascimento }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="peso">Peso</label>
+            <input type="text" class="form-control" id="peso" name="peso" value="{{ lutador.peso }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="nivel">Nível de Experiência</label>
+            <input type="text" class="form-control" id="nivel" name="nivel" value="{{ lutador.nivel }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="equipe">Equipe</label>
+            <input type="text" class="form-control" id="equipe" name="equipe" value="{{ lutador.equipe }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="coach">Nome do Técnico</label>
+            <input type="text" class="form-control" id="coach" name="coach" value="{{ lutador.coach }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="contato">Contato</label>
+            <input type="text" class="form-control" id="contato" name="contato" value="{{ lutador.contato }}" readonly>
+        </div>
+    </form>
+    <br>
+    <br>
 </div>
-
 {% endblock %}

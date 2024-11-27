@@ -1,7 +1,9 @@
 from django.db import models
+from django.conf import settings
 
 # Crie seus modelos aqui.
 class Lutadores(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lutador_profile', null=True, blank=True)
     nome = models.CharField(max_length=50)
     data_nascimento = models.DateField(null=True, blank=True)
     peso = models.FloatField(max_length=50)
