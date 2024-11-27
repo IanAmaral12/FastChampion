@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+{% if messages %}
+    {% for i in messages %}
+        <div class="alert {{i.tags}}" role="alert">
+            {{i}}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<br>
+<div class="container">
+    <h1>Meus Pagamentos</h1>
+    {% if pagamentos %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data do Pagamento</th>
+                    <th>Hora do Pagamento</th>
+                    <th>Status do Pagamento</th>
+                    <th>Tipo de Ingresso</th>
+                    <th>Quantidade</th>
+                    <th>Valor Final</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pagamento in pagamentos %}
+                    <tr>
+                        <td><input type="text" class="form-control" value="{{ pagamento.data_pagamento }}" readonly></td>
+                        <td><input type="text" class="form-control" value="{{ pagamento.hora_pagamento }}" readonly></td>
+                        <td><input type="text" class="form-control" value="{{ pagamento.status_pagamento }}" readonly></td>
+                        <td><input type="text" class="form-control" value="{{ pagamento.tipo_ingresso }}" readonly></td>
+                        <td><input type="text" class="form-control" value="{{ pagamento.quantidade }}" readonly></td>
+                        <td><input type="text" class="form-control" value="{{ pagamento.valor_final }}" readonly></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Você não possui pagamentos registrados.</p>
+    {% endif %}
+</div>
+{% endblock %}

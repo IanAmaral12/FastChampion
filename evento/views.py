@@ -6,6 +6,10 @@ from .models import Pagamento
 from lutadores.models import Lutas
 import time
 
+@login_required(login_url='/auth/login')
+def meus_pagamentos(request):
+    pagamentos = Pagamento.objects.filter(usuario=request.user)
+    return render(request, 'meus_pagamentos.html', {'pagamentos': pagamentos})
 
 def home(request):
     lutas_dia1 = Lutas.objects.filter(dia_luta='Dia 1')
