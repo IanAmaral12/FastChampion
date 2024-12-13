@@ -1,8 +1,8 @@
-Modelo entregável do projeto de Engenharia de Software
+Modelo primário do projeto da NC FIGHT.
 
 1 - Instalar Python e configurar a pasta de instalação ao PATH das Variáveis de Ambiente
 
-No powershell ou cmd, na pasta do diretório, execute: 
+No terminal, execute as seguintes operações:
 
 2 - Iniciar o Ambiente virtual(Se estiver usando Linux, troque python por python3): 
 venv\Scripts\Activate
